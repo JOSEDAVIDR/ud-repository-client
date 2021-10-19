@@ -5,11 +5,71 @@ Vue.use(Router);
 
 const router = new Router({
   mode: "history",
-  routes: [
+  routes: [{
+      path: "/users",
+      name: "users",
+      component: () => import("./components/Users/Users")
+    },
+    {
+      path: "/users/add",
+      name: "addusers",
+      component: () => import("./components/Users/AddUsers")
+    },
+    {
+      path: "/users/edit/:id",
+      name: "editusers",
+      component: () => import("./components/Users/EditUsers")
+    },
+    {
+      path: "/users/detail/:id",
+      name: "detailusers",
+      component: () => import("./components/Users/DetailUsers")
+    },
+    {
+      path: "/files",
+      name: "files",
+      component: () => import("./components/Files/Files")
+    },
+    // cmbnoe
+    {
+      path: "/filesbuscar",
+      name: "filesbuscar",
+      component: () => import("./components/Files/FilesBuscar")
+    },
+    {
+      path: "/revisar",
+      name: "revisar",
+      component: () => import("./components/Revisar/Revisar")
+    },
+    {
+      path: "/files/detail/:id",
+      name: "valorar",
+      component: () => import("./components/Revisar/DetailObserv")
+    },
+    //fin cmbnoe
+    {
+      path: "/files/add",
+      name: "addfiles",
+      component: () => import("./components/Files/AddFiles")
+    },
+    {
+      path: "/files/edit/:id",
+      name: "editfiles",
+      component: () => import("./components/Files/EditFiles")
+    },
+    {
+      path: "/files/detail/:id",
+      name: "detailfiles",
+      component: () => import("./components/Files/DetailFiles")
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: () => import("./components/Home")
+    },
     {
       path: "/",
-      alias: "/index",
-      name: "index",
+      name: "init",
       component: () => import("./components/Home")
     },
     {
@@ -17,31 +77,29 @@ const router = new Router({
       name: "login",
       component: () => import("./components/Login")
     },
-
+    //josedavid
     {
-      path: "/files",
-      name: "files",
-      component: () => import("./components/FilesList")
+      path: "/stadistics",
+      name: "stadistics",
+      component: () => import("./components/Stadistics/Stadistics")
     },
     {
-      path: "/files/:id",
-      name: "files-details",
-      component: () => import("./components/File")
-    },
-    {
-      path: "/add",
-      name: "add",
-      component: () => import("./components/AddFiles")
+      path: "/stadistics/graficas",
+      name: "grafica",
+      component: () => import("./components/Stadistics/Graphics")
     }
+    //end josedavid
+
   ]
 });
-
 router.beforeEach((to, from, next) => {
   let ls = localStorage.getItem('token');
-  
-  console.log(to.name)
-  if (to.name !=='login' && ls === null) next({name:'login'})
-  else if (to.name ==='login' && ls!== null) next({name:'files'})
+  if (to.name !== 'login' && ls === null) next({
+    name: 'login'
+  })
+  else if (to.name === 'login' && ls !== null) next({
+    name: 'home'
+  })
   else next()
 
 });
