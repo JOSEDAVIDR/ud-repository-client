@@ -69,7 +69,6 @@
               half-increments="true"
               dark
             ></v-rating>
-            <p>{{ rating }}</p>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="green darken-1" text @click="dialog = false">
@@ -226,15 +225,17 @@ export default {
           console.log(e);
         });
     },
-    calificarRecurso() {
-    
+      calificarRecurso() {
       stadisticsService
         .getStadisticsByid(this.$route.params.id)
         .then((response) => {
           this.stadistic = response.data;
-          this.rankingold = response.data[0].ranking;
-                this.rating = (this.rankingold + this.rating) / 2;
-          this.stadistic[0].ranking = this.rating;
+          if (this.stadistic[0].ranking === 0) {
+            this.stadistic[0].ranking = this.rating;
+          } else {
+            this.stadistic[0].ranking =
+              (this.stadistic[0].ranking + this.ranking) / 2;
+          }
           stadisticsService.updateStadistics(
             this.stadistic[0],
             this.stadistic[0].id
